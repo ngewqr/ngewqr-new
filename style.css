@@ -1,0 +1,254 @@
+/* ngewqr.com — design tokens */
+:root {
+  --bg:        #fafafa;   /* page background */
+  --surface:   #ffffff;   /* cards */
+  --border:    #e8e8e8;   /* hairline borders */
+  --border-hover: #d6d6d6;
+  --ink:       #2b2b2b;   /* headings — charcoal, never pure black */
+  --body:      #515151;   /* body text */
+  --muted:     #6f6f6f;   /* captions, labels — darkened from #8a8a8a for WCAG AA */
+  --pill-bg:   #f2f2f2;   /* feature pill background */
+  --pill-text: #515151;
+  --radius:    12px;
+  --radius-sm: 999px;     /* pills */
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("fonts/inter-var-latin.woff2") format("woff2");
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--body);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  width: min(100% - 48px, 720px);
+  margin: 0 auto;
+}
+
+/* ---- Typography ---- */
+
+h1, h2, h3 {
+  color: var(--ink);
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+p a,
+footer a {
+  text-decoration: underline;
+  text-decoration-color: var(--border-hover);
+  text-underline-offset: 3px;
+}
+
+p a:hover,
+footer a:hover {
+  text-decoration-color: var(--ink);
+}
+
+.label {
+  display: block;
+  margin-bottom: 16px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* ---- Sections ---- */
+
+section {
+  margin-top: 96px;
+}
+
+.hero {
+  padding-top: 96px;
+}
+
+.hero .tagline {
+  margin-top: 12px;
+  font-size: 1.125rem;
+}
+
+.hero .meta {
+  margin-top: 8px;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.prose p + p {
+  margin-top: 1em;
+}
+
+/* ---- Recommendations ---- */
+
+.recs > .intro {
+  margin-bottom: 8px;
+}
+
+.recs .note {
+  font-size: 0.875rem;
+}
+
+.rec-group {
+  margin-top: 40px;
+}
+
+.rec-group h2 {
+  margin-bottom: 4px;
+}
+
+.rec-group .group-desc {
+  margin-bottom: 16px;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.card {
+  position: relative;
+  display: block;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.15s ease;
+}
+
+.card:hover,
+.card:focus-visible {
+  border-color: var(--border-hover);
+}
+
+.card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  padding-right: 20px;
+}
+
+.card p {
+  margin-top: 4px;
+  font-size: 0.875rem;
+}
+
+.card .ext {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+  list-style: none;
+}
+
+.pills li {
+  padding: 3px 10px;
+  background: var(--pill-bg);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  color: var(--pill-text);
+  white-space: nowrap;
+}
+
+/* ---- Footer ---- */
+
+footer {
+  margin-top: auto;
+  padding: 96px 24px 40px;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+footer .sig {
+  margin-top: 6px;
+  font-size: 0.75rem;
+}
+
+/* ---- Responsive ---- */
+
+@media (min-width: 640px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 639px) {
+  section {
+    margin-top: 64px;
+  }
+
+  .hero {
+    padding-top: 64px;
+  }
+
+  h1 {
+    font-size: 1.625rem;
+  }
+
+  footer {
+    padding-top: 64px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
