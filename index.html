@@ -3,120 +3,143 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ngewqr — Qirui Ngew</title>
-<meta name="description" content="Qirui Ngew — founder of ADspace, Johor Bahru. A personal page about how I think, and the minimalist, well-made things I trust enough to recommend.">
-<meta name="author" content="Qirui Ngew">
+<title>Qirui — ngewqr.com</title>
+<meta name="description" content="Qirui — founder of ADspace, Johor Bahru. A few principles, and things worth your money.">
+<meta name="author" content="Qirui">
 <meta name="theme-color" content="#fafafa">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ngewqr.com/">
-<meta property="og:title" content="ngewqr — Qirui Ngew">
-<meta property="og:description" content="I run a marketing agency. I collect things that make life easier.">
+<meta property="og:title" content="Qirui — ngewqr.com">
+<meta property="og:description" content="Founder of ADspace. Collector of things that make life easier.">
 
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 
 <link rel="preload" as="font" href="fonts/inter-var-latin.woff2" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
+<script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
 
 <main>
   <header class="hero">
-    <h1>Qirui Ngew</h1>
-    <p class="tagline">I run a marketing agency. I collect things that make life easier.</p>
-    <p class="meta">Johor Bahru &middot; Founder, ADspace</p>
+    <h1>Qirui</h1>
+    <p class="tagline">Founder of <a href="https://adspacestudios.com" target="_blank" rel="noopener">ADspace</a>. Collector of things that make life easier.</p>
+    <p class="meta">Johor Bahru</p>
   </header>
 
-  <section class="prose" aria-labelledby="about-label">
+  <section class="prose reveal" aria-labelledby="about-label">
     <span class="label" id="about-label">About</span>
-    <p>I spend my days helping brands communicate better — and my spare time noticing which products respect people's time and which don't.</p>
-    <p>I gravitate toward minimalist, modern, easy-to-use things. Not because minimal is trendy, but because good design removes friction. When something just works, you stop thinking about it. That's the point.</p>
+    <p>Qirui runs ADspace, a digital marketing agency in Johor Bahru — helping brands say less and mean more.</p>
+    <p>The rest of the time goes to noticing which products respect people's time: minimalist, modern, friction-free things that just work, so you can stop thinking about them.</p>
   </section>
 
-  <section class="prose" aria-labelledby="think-label">
-    <span class="label" id="think-label">How I Think</span>
-    <p>Perfectionist, but not perfect. I'm not chasing flawless — I'm chasing great. Do what's great, serve what people actually need, and keep it lovely. That's the whole philosophy.</p>
+  <section class="reveal" aria-labelledby="principles-label">
+    <span class="label" id="principles-label">Principles</span>
+    <ul class="principles">
+      <li class="principle">
+        <h2>Great over flawless</h2>
+        <p>Perfectionist, but not perfect. Chasing great, not flawless.</p>
+      </li>
+      <li class="principle">
+        <h2>Serve real needs</h2>
+        <p>Make what people actually need — nothing more.</p>
+      </li>
+      <li class="principle">
+        <h2>Keep it lovely</h2>
+        <p>If it isn't a pleasure to use, it isn't done.</p>
+      </li>
+    </ul>
   </section>
 
   <section class="recs" aria-labelledby="recs-label">
-    <span class="label" id="recs-label">Things I'd Recommend</span>
-    <p class="intro">Things I use, things I've used, things worth your money.</p>
-    <p class="note muted">Sample picks shown below while I finalize the real list.</p>
+    <span class="label reveal" id="recs-label">Recommendations</span>
+    <p class="intro reveal">Used, tested, worth your money.</p>
+    <p class="note muted reveal">Sample picks, for now.</p>
+
+    <!-- To use a real photo in any card: replace the inline <svg> inside
+         .tile with <img src="img/name.jpg" alt="" loading="lazy" width="600" height="450">
+         (keep the .tile wrapper — it handles the crop and hover motion). -->
 
     <div class="rec-group">
-      <h2>Home Brands</h2>
-      <p class="group-desc">Brands whose whole range I trust.</p>
+      <h2 class="reveal">Home Brands</h2>
       <div class="card-grid">
-        <a class="card" href="https://www.muji.com/" target="_blank" rel="noopener">
-          <h3>Muji</h3>
-          <p>Everything is quiet, useful, and never asks for attention.</p>
-          <ul class="pills">
-            <li>Understated</li>
-            <li>Consistent quality</li>
-            <li>Fair prices</li>
-          </ul>
-          <span class="ext" aria-hidden="true">&#8599;</span>
+        <a class="card reveal" href="https://www.muji.com/" target="_blank" rel="noopener">
+          <div class="tile" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round"><path d="M14 30h36v4a18 18 0 0 1-36 0z"/><path d="M26 20c0-3 4-3 4-6M38 20c0-3 4-3 4-6"/></svg>
+            <span class="ext">&#8599;</span>
+          </div>
+          <div class="body">
+            <h3>Muji</h3>
+            <p class="why">Quiet, useful, everywhere.</p>
+            <ul class="pills"><li>Understated</li><li>Fair prices</li></ul>
+          </div>
         </a>
-        <a class="card" href="https://www.ikea.com/" target="_blank" rel="noopener">
-          <h3>IKEA</h3>
-          <p>Democratic design that actually survives daily life.</p>
-          <ul class="pills">
-            <li>Worth the price</li>
-            <li>Easy to fix</li>
-            <li>Everywhere</li>
-          </ul>
-          <span class="ext" aria-hidden="true">&#8599;</span>
+        <a class="card reveal" href="https://www.ikea.com/" target="_blank" rel="noopener">
+          <div class="tile" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 32 32 16l18 16"/><path d="M20 30v18h24V30"/><path d="M28 48V38h8v10"/></svg>
+            <span class="ext">&#8599;</span>
+          </div>
+          <div class="body">
+            <h3>IKEA</h3>
+            <p class="why">Design that survives daily life.</p>
+            <ul class="pills"><li>Worth it</li><li>Fixable</li></ul>
+          </div>
         </a>
       </div>
     </div>
 
     <div class="rec-group">
-      <h2>Product Brands</h2>
-      <p class="group-desc">Specific makers doing one thing brilliantly.</p>
+      <h2 class="reveal">Product Brands</h2>
       <div class="card-grid">
-        <a class="card" href="https://www.anker.com/" target="_blank" rel="noopener">
-          <h3>Anker</h3>
-          <p>Charging gear that just works, every single time.</p>
-          <ul class="pills">
-            <li>Reliable</li>
-            <li>Compact</li>
-            <li>Honest specs</li>
-          </ul>
-          <span class="ext" aria-hidden="true">&#8599;</span>
+        <a class="card reveal" href="https://www.anker.com/" target="_blank" rel="noopener">
+          <div class="tile" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M35 12 20 36h10l-3 16 17-26H33z"/></svg>
+            <span class="ext">&#8599;</span>
+          </div>
+          <div class="body">
+            <h3>Anker</h3>
+            <p class="why">Charging that just works.</p>
+            <ul class="pills"><li>Reliable</li><li>Compact</li></ul>
+          </div>
         </a>
-        <a class="card" href="https://www.aqara.com/" target="_blank" rel="noopener">
-          <h3>Aqara</h3>
-          <p>Smart home sensors with none of the smart home headache.</p>
-          <ul class="pills">
-            <li>One-button setup</li>
-            <li>Tiny</li>
-            <li>Long battery</li>
-          </ul>
-          <span class="ext" aria-hidden="true">&#8599;</span>
+        <a class="card reveal" href="https://www.aqara.com/" target="_blank" rel="noopener">
+          <div class="tile" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round"><circle cx="32" cy="44" r="3"/><path d="M22 36a14 14 0 0 1 20 0M15 28a24 24 0 0 1 34 0"/></svg>
+            <span class="ext">&#8599;</span>
+          </div>
+          <div class="body">
+            <h3>Aqara</h3>
+            <p class="why">Smart home, zero headache.</p>
+            <ul class="pills"><li>Easy setup</li><li>Tiny</li></ul>
+          </div>
         </a>
       </div>
     </div>
 
     <div class="rec-group">
-      <h2>Home Buys</h2>
-      <p class="group-desc">Individual items that earned their place.</p>
+      <h2 class="reveal">Home Buys</h2>
       <div class="card-grid">
-        <div class="card">
-          <h3>A proper kettle</h3>
-          <p>Boils fast, pours clean, looks like nothing. Perfect.</p>
-          <ul class="pills">
-            <li>Quiet</li>
-            <li>One job, done well</li>
-          </ul>
+        <div class="card reveal">
+          <div class="tile" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 24h18l-3 24H25zM40 28l8-4v14l-7 2"/><path d="M24 18h14"/></svg>
+          </div>
+          <div class="body">
+            <h3>A proper kettle</h3>
+            <p class="why">Boils fast, looks like nothing.</p>
+            <ul class="pills"><li>Quiet</li></ul>
+          </div>
         </div>
-        <div class="card">
-          <h3>Blackout curtains</h3>
-          <p>The cheapest sleep upgrade nobody talks about.</p>
-          <ul class="pills">
-            <li>Instant payoff</li>
-            <li>Worth the price</li>
-          </ul>
+        <div class="card reveal">
+          <div class="tile" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round"><path d="M14 14h36M20 14c0 12 4 12 4 22s-4 10-4 14M32 14c0 12 3 12 3 22s-3 10-3 14M44 14c0 12 4 12 4 22s-4 10-4 14"/></svg>
+          </div>
+          <div class="body">
+            <h3>Blackout curtains</h3>
+            <p class="why">The cheapest sleep upgrade.</p>
+            <ul class="pills"><li>Instant payoff</li></ul>
+          </div>
         </div>
       </div>
     </div>
@@ -124,9 +147,9 @@
 </main>
 
 <footer>
-  <p>Say hello — <a href="mailto:adspacestudios@gmail.com">adspacestudios@gmail.com</a></p>
-  <p class="sig">ADspace &middot; ngewqr.com &middot; &copy; 2026</p>
+  <p>&copy; 2026 ngewqr.com</p>
 </footer>
 
+<script src="script.js" defer></script>
 </body>
 </html>
