@@ -20,13 +20,15 @@ at [ngewqr.com](https://ngewqr.com).
 | `.nojekyll` | Tells Pages to skip Jekyll processing |
 | `robots.txt` | Allows all crawlers |
 
-## Editing recommendations
+## Editing the Selection
 
-Cards live in `index.html` under `THINGS I'D RECOMMEND`. To add one, copy an
-existing `<a class="card">` (linked) or `<div class="card">` (unlinked) block
-inside the relevant `card-grid` and edit the name, one-liner, and pills.
-To use a real photo instead of the placeholder icon, swap the inline `<svg>`
-in `.tile` for `<img src="img/name.jpg" alt="" loading="lazy" width="600" height="450">`.
+Items live in `index.html` inside `.selection-list`. To add one, copy an
+existing `<li class="item">` block and edit the name, traits, and `data-cat`.
+`data-cat` is free-form ("tech", "hygiene", ...) — a filter chip is generated
+automatically for every category that appears in the list, so new categories
+need no other changes. Use an `<a ... target="_blank" rel="noopener">` wrapper
+for linked items (keep the &#8599; span) or a plain `<div>` wrapper for
+unlinked ones.
 
 ## Deploying
 

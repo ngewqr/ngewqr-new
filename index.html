@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Qirui — ngewqr.com</title>
-<meta name="description" content="Qirui — founder of ADspace, Johor Bahru. A few principles, and things worth your money.">
+<meta name="description" content="Qirui — founder of ADspace, Johor Bahru. And a small selection of things worth your money.">
 <meta name="author" content="Qirui">
-<meta name="theme-color" content="#fafafa">
+<meta name="theme-color" content="#eef0f4">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ngewqr.com/">
@@ -29,120 +29,109 @@
     <p class="meta">Johor Bahru</p>
   </header>
 
-  <section class="prose reveal" aria-labelledby="about-label">
+  <section class="prose glass reveal" aria-labelledby="about-label">
     <span class="label" id="about-label">About</span>
     <p>Qirui runs ADspace, a digital marketing agency in Johor Bahru — helping brands say less and mean more.</p>
-    <p>The rest of the time goes to noticing which products respect people's time: minimalist, modern, friction-free things that just work, so you can stop thinking about them.</p>
+    <p>Off work: a soft spot for things that are simple, useful, and easy to live with. Perfectionist, but not perfect.</p>
   </section>
 
-  <section class="reveal" aria-labelledby="principles-label">
-    <span class="label" id="principles-label">Principles</span>
-    <ul class="principles">
-      <li class="principle">
-        <h2>Great over flawless</h2>
-        <p>Perfectionist, but not perfect. Chasing great, not flawless.</p>
+  <section class="selection" aria-labelledby="selection-label">
+    <h2 class="label" id="selection-label">Selection</h2>
+    <p class="intro reveal">Used, liked, worth your money.</p>
+    <p class="note muted reveal">Sample entries, for now.</p>
+
+    <!-- Adding an item:
+         <li class="item" data-cat="tech">
+           <a href="https://..." target="_blank" rel="noopener">      (or <div> if no link)
+             <span class="thumb" aria-hidden="true">...svg or img...</span>
+             <div class="text">
+               <h3>Name <span class="ext">&#8599;</span></h3>
+               <p class="traits">Trait one &middot; Trait two &middot; Trait three</p>
+             </div>
+           </a>
+         </li>
+         data-cat is free-form; new categories get a filter chip automatically.
+         For a real product photo, put the file in img/ and use inside .thumb:
+         <img src="img/name.jpg" alt="" loading="lazy" width="112" height="112"> -->
+
+    <div class="filters reveal" role="group" aria-label="Filter by category">
+      <button type="button" class="filter" aria-pressed="true" data-cat="all">All</button>
+    </div>
+
+    <ul class="selection-list glass">
+      <li class="item reveal" data-cat="tech">
+        <a href="https://www.apple.com/macbook-air/" target="_blank" rel="noopener">
+          <span class="thumb" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 20h36v24H14zM10 48h44l-4 4H14z"/></svg></span>
+          <div class="text">
+            <h3>MacBook Air <span class="ext" aria-hidden="true">&#8599;</span></h3>
+            <p class="traits">Office friendly &middot; Lightweight &middot; Value for money</p>
+          </div>
+        </a>
       </li>
-      <li class="principle">
-        <h2>Serve real needs</h2>
-        <p>Make what people actually need — nothing more.</p>
+      <li class="item reveal" data-cat="hygiene">
+        <a href="https://www.aesop.com/" target="_blank" rel="noopener">
+          <span class="thumb" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M26 24h12v28H26zM28 24v-6h8v6M32 18v-6h6"/></svg></span>
+          <div class="text">
+            <h3>Aesop Geranium body wash <span class="ext" aria-hidden="true">&#8599;</span></h3>
+            <p class="traits">Cleanses well &middot; Nice aromatic smell &middot; Refillable</p>
+          </div>
+        </a>
       </li>
-      <li class="principle">
-        <h2>Keep it lovely</h2>
-        <p>If it isn't a pleasure to use, it isn't done.</p>
+      <li class="item reveal" data-cat="tech">
+        <a href="https://www.anker.com/" target="_blank" rel="noopener">
+          <span class="thumb" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M35 12 20 36h10l-3 16 17-26H33z"/></svg></span>
+          <div class="text">
+            <h3>Anker Nano charger <span class="ext" aria-hidden="true">&#8599;</span></h3>
+            <p class="traits">Tiny &middot; Fast &middot; Never fusses</p>
+          </div>
+        </a>
+      </li>
+      <li class="item reveal" data-cat="home">
+        <div>
+          <span class="thumb" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14h36M20 14c0 12 4 12 4 22s-4 10-4 14M32 14c0 12 3 12 3 22s-3 10-3 14M44 14c0 12 4 12 4 22s-4 10-4 14"/></svg></span>
+          <div class="text">
+            <h3>Blackout curtains</h3>
+            <p class="traits">Instant better sleep &middot; Cheap upgrade</p>
+          </div>
+        </div>
+      </li>
+      <li class="item reveal" data-cat="home">
+        <a href="https://www.aqara.com/" target="_blank" rel="noopener">
+          <span class="thumb" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="44" r="3"/><path d="M22 36a14 14 0 0 1 20 0M15 28a24 24 0 0 1 34 0"/></svg></span>
+          <div class="text">
+            <h3>Aqara door sensor <span class="ext" aria-hidden="true">&#8599;</span></h3>
+            <p class="traits">One-button setup &middot; Long battery &middot; Tiny</p>
+          </div>
+        </a>
+      </li>
+      <li class="item reveal" data-cat="kitchen">
+        <div>
+          <span class="thumb" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 24h18l-3 24H25zM40 28l8-4v14l-7 2M24 18h14"/></svg></span>
+          <div class="text">
+            <h3>A proper kettle</h3>
+            <p class="traits">Boils fast &middot; Quiet &middot; Looks like nothing</p>
+          </div>
+        </div>
+      </li>
+      <li class="item reveal" data-cat="kitchen">
+        <a href="https://www.muji.com/" target="_blank" rel="noopener">
+          <span class="thumb" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 26h18v14a8 8 0 0 1-8 8h-2a8 8 0 0 1-8-8zM40 30l8-2-2 10-6 1M26 26c0-5 10-5 10 0"/></svg></span>
+          <div class="text">
+            <h3>Muji glass teapot <span class="ext" aria-hidden="true">&#8599;</span></h3>
+            <p class="traits">Understated &middot; Pours clean &middot; Fair price</p>
+          </div>
+        </a>
+      </li>
+      <li class="item reveal" data-cat="hygiene">
+        <div>
+          <span class="thumb" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 16h28v22H18zM18 24h28M18 38v10h28V38"/></svg></span>
+          <div class="text">
+            <h3>Cotton waffle towels</h3>
+            <p class="traits">Dries fast &middot; Softens with age</p>
+          </div>
+        </div>
       </li>
     </ul>
-  </section>
-
-  <section class="recs" aria-labelledby="recs-label">
-    <span class="label reveal" id="recs-label">Recommendations</span>
-    <p class="intro reveal">Used, tested, worth your money.</p>
-    <p class="note muted reveal">Sample picks, for now.</p>
-
-    <!-- To use a real photo in any card: replace the inline <svg> inside
-         .tile with <img src="img/name.jpg" alt="" loading="lazy" width="600" height="450">
-         (keep the .tile wrapper — it handles the crop and hover motion). -->
-
-    <div class="rec-group">
-      <h2 class="reveal">Home Brands</h2>
-      <div class="card-grid">
-        <a class="card reveal" href="https://www.muji.com/" target="_blank" rel="noopener">
-          <div class="tile" aria-hidden="true">
-            <svg viewBox="0 0 64 64" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round"><path d="M14 30h36v4a18 18 0 0 1-36 0z"/><path d="M26 20c0-3 4-3 4-6M38 20c0-3 4-3 4-6"/></svg>
-            <span class="ext">&#8599;</span>
-          </div>
-          <div class="body">
-            <h3>Muji</h3>
-            <p class="why">Quiet, useful, everywhere.</p>
-            <ul class="pills"><li>Understated</li><li>Fair prices</li></ul>
-          </div>
-        </a>
-        <a class="card reveal" href="https://www.ikea.com/" target="_blank" rel="noopener">
-          <div class="tile" aria-hidden="true">
-            <svg viewBox="0 0 64 64" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 32 32 16l18 16"/><path d="M20 30v18h24V30"/><path d="M28 48V38h8v10"/></svg>
-            <span class="ext">&#8599;</span>
-          </div>
-          <div class="body">
-            <h3>IKEA</h3>
-            <p class="why">Design that survives daily life.</p>
-            <ul class="pills"><li>Worth it</li><li>Fixable</li></ul>
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <div class="rec-group">
-      <h2 class="reveal">Product Brands</h2>
-      <div class="card-grid">
-        <a class="card reveal" href="https://www.anker.com/" target="_blank" rel="noopener">
-          <div class="tile" aria-hidden="true">
-            <svg viewBox="0 0 64 64" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M35 12 20 36h10l-3 16 17-26H33z"/></svg>
-            <span class="ext">&#8599;</span>
-          </div>
-          <div class="body">
-            <h3>Anker</h3>
-            <p class="why">Charging that just works.</p>
-            <ul class="pills"><li>Reliable</li><li>Compact</li></ul>
-          </div>
-        </a>
-        <a class="card reveal" href="https://www.aqara.com/" target="_blank" rel="noopener">
-          <div class="tile" aria-hidden="true">
-            <svg viewBox="0 0 64 64" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round"><circle cx="32" cy="44" r="3"/><path d="M22 36a14 14 0 0 1 20 0M15 28a24 24 0 0 1 34 0"/></svg>
-            <span class="ext">&#8599;</span>
-          </div>
-          <div class="body">
-            <h3>Aqara</h3>
-            <p class="why">Smart home, zero headache.</p>
-            <ul class="pills"><li>Easy setup</li><li>Tiny</li></ul>
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <div class="rec-group">
-      <h2 class="reveal">Home Buys</h2>
-      <div class="card-grid">
-        <div class="card reveal">
-          <div class="tile" aria-hidden="true">
-            <svg viewBox="0 0 64 64" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 24h18l-3 24H25zM40 28l8-4v14l-7 2"/><path d="M24 18h14"/></svg>
-          </div>
-          <div class="body">
-            <h3>A proper kettle</h3>
-            <p class="why">Boils fast, looks like nothing.</p>
-            <ul class="pills"><li>Quiet</li></ul>
-          </div>
-        </div>
-        <div class="card reveal">
-          <div class="tile" aria-hidden="true">
-            <svg viewBox="0 0 64 64" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round"><path d="M14 14h36M20 14c0 12 4 12 4 22s-4 10-4 14M32 14c0 12 3 12 3 22s-3 10-3 14M44 14c0 12 4 12 4 22s-4 10-4 14"/></svg>
-          </div>
-          <div class="body">
-            <h3>Blackout curtains</h3>
-            <p class="why">The cheapest sleep upgrade.</p>
-            <ul class="pills"><li>Instant payoff</li></ul>
-          </div>
-        </div>
-      </div>
-    </div>
   </section>
 </main>
 
