@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Coming Soon — ngewqr.com</title>
-<meta name="description" content="Built slow. Built right. A personal index of the things worth your time — and your money.">
+<meta name="description" content="ngewqr.com — coming soon.">
 <meta name="theme-color" content="#f2efe9">
 <meta name="robots" content="noindex">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ngewqr.com/">
 <meta property="og:title" content="Coming Soon">
-<meta property="og:description" content="Built slow. Built right. A personal index of the things worth your time — and your money.">
+<meta property="og:description" content="ngewqr.com — coming soon.">
 
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -148,13 +148,6 @@ body::after{
 }
 .copy-inner{max-width:30em;}
 
-.index{
-  display:flex;align-items:center;gap:14px;
-  font-size:var(--fs-xs);letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);
-  margin-bottom:clamp(28px,3.4vw,42px);
-}
-.index .rule{flex:1;max-width:64px;height:1px;background:var(--line-strong);}
-
 h1{
   font-family:var(--serif);font-weight:400;
   font-size:clamp(2.75rem,5.4vw,4.25rem);
@@ -168,14 +161,9 @@ h1{
 }
 .cycle.out{opacity:0;transform:translateY(10px);}
 
-.sub{
-  margin-top:clamp(24px,2.6vw,32px);
-  max-width:27em;font-size:var(--fs-md);line-height:1.6;color:var(--body);
-}
-
 /* ── Signup ── */
 form{
-  margin-top:clamp(40px,4.6vw,62px);
+  margin-top:clamp(48px,5.2vw,68px);
   display:flex;align-items:flex-end;gap:24px;max-width:440px;
 }
 .field{flex:1;min-width:0;}
@@ -257,7 +245,7 @@ button:hover .arrow{transform:translateX(4px);}
 
 <header class="masthead">
   <span class="wordmark">ngewqr<span class="dot">.com</span></span>
-  <span class="status">In preparation</span>
+  <span class="status">Coming soon</span>
 </header>
 
 <div class="split">
@@ -267,16 +255,12 @@ button:hover .arrow{transform:translateX(4px);}
     <div class="frame frame-2"></div>
     <div class="frame frame-3"></div>
     <div class="frame frame-4"></div>
-    <span class="plate"><span class="bar"></span>Fig. <span class="num" id="fignum">01</span> — Still assembling</span>
+    <span class="plate"><span class="bar"></span>Fig. <span class="num" id="fignum">01</span></span>
   </div>
 
   <div class="hero-copy">
     <div class="copy-inner">
-      <p class="index"><span class="rule"></span>Coming soon</p>
-
-      <h1>Built slow.<br><span class="cycle" id="cycle">Built right.</span></h1>
-
-      <p class="sub">A personal index of the things worth your time — and your money. It arrives when it's ready, and not a moment before.</p>
+      <h1>Hello.<br><span class="cycle" id="cycle">Good to see you.</span></h1>
 
       <form id="notify">
         <div class="field">
@@ -333,7 +317,7 @@ button:hover .arrow{transform:translateX(4px);}
   var fignum = document.getElementById('fignum');
   if (frames.length < 2 || !cycle) return;
 
-  var lines = ['Built right.', 'Built to last.', 'Built once.', 'Built properly.'];
+  var lines = ['Good to see you.', 'Won’t be long.', 'Nearly there.', 'See you soon.'];
   var i = 0;
   var DWELL = 4200;   /* time each state is held */
   var FADE  = 550;    /* matches the CSS transition */
