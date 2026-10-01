@@ -43,11 +43,14 @@ h1{
   letter-spacing:-0.015em;color:var(--ink);
 }
 p{margin-top:22px;max-width:30em;font-size:1.0625rem;}
+/* 44px tall tap target; the extra height sits above the text, so the link
+   keeps its place and its underline */
 .back{
-  display:inline-block;margin-top:34px;
+  display:inline-flex;align-items:flex-end;align-self:flex-start;
+  min-height:44px;margin-top:14px;
   font-size:0.75rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;
   color:var(--ink);text-decoration:none;
-  border-bottom:1px solid rgba(28,26,23,0.34);padding-bottom:4px;
+  border-bottom:1px solid rgba(28,26,23,0.55);padding-bottom:4px;
 }
 .colophon{
   position:relative;z-index:10;

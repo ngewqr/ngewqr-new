@@ -30,7 +30,7 @@
   --body:#4a453f;
   --muted:#6b6560;
   --line:rgba(28,26,23,0.16);
-  --line-strong:rgba(28,26,23,0.34);
+  --field-line:rgba(28,26,23,0.55);  /* 3.7:1 on paper; a control's edge needs 3:1 (WCAG 1.4.11) */
   --media:#14110d;
   --fs-xs:0.75rem;
   --fs-sm:0.8125rem;
@@ -124,7 +124,7 @@ body::after{
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
 }
 
-/* Gallery plate */
+/* Gallery plate — caption, plus the slideshow's pause control */
 .plate{
   position:absolute;z-index:3;
   left:clamp(20px,2.4vw,34px);
@@ -140,57 +140,92 @@ body::after{
 }
 .plate .num.out{opacity:0;}
 
+/* Pause / play: a small glyph inside a 44px target. Negative margins keep
+   the big hit area from adding height to the plate. */
+.pause{
+  display:grid;place-items:center;
+  width:44px;height:44px;margin:-14px 0 -14px -10px;padding:0;
+  background:none;border:0;border-radius:2px;
+  color:inherit;cursor:pointer;
+  opacity:0.75;transition:opacity .4s var(--ease);
+}
+.pause[hidden]{display:none;}
+.pause:hover{opacity:1;}
+.pause:focus-visible{outline:2px solid rgba(242,239,233,0.9);outline-offset:-6px;opacity:1;}
+.pause .ico{width:8px;height:10px;border-left:2px solid currentColor;border-right:2px solid currentColor;}
+.pause[data-state="paused"] .ico{
+  width:0;height:0;
+  border-left:8px solid currentColor;border-right:0;
+  border-top:5px solid transparent;border-bottom:5px solid transparent;
+}
+
 /* ── Right: words ── */
 .hero-copy{
   position:relative;z-index:10;
   display:flex;flex-direction:column;justify-content:center;
   padding:clamp(48px,5vw,88px) clamp(24px,4.4vw,72px);
 }
-.copy-inner{max-width:30em;}
+.copy-inner{max-width:34em;}
 
 h1{
   font-family:var(--serif);font-weight:400;
-  font-size:clamp(2.75rem,5.4vw,4.25rem);
+  font-size:clamp(2.618rem,5.4vw,4.236rem);  /* φ² → φ³ */
   line-height:1.04;letter-spacing:-0.015em;color:var(--ink);
 }
-/* The cycling line — a slow rise, not a flip */
-.cycle{
-  display:inline-block;
-  color:var(--muted);
-  transition:opacity .55s var(--ease),transform .55s var(--ease);
+h1 .greet{display:block;}
+
+/* The cycling line. Every phrase sits in the same grid cell, so the line
+   always holds the tallest phrase's height — nothing below it moves when
+   the phrase changes. The outgoing phrase fades down, then the next rises. */
+.cycle{display:grid;color:var(--muted);}
+.cycle .phrase{
+  grid-area:1/1;
+  text-wrap:balance;  /* if a phrase wraps, split it evenly rather than orphan a word */
+  opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity .55s var(--ease),transform .55s var(--ease),visibility 0s .55s;
 }
-.cycle.out{opacity:0;transform:translateY(10px);}
+.cycle .phrase.on{
+  opacity:1;visibility:visible;transform:none;
+  transition:opacity .55s var(--ease) .55s,transform .55s var(--ease) .55s,visibility 0s .55s;
+}
 
 /* ── Signup ── */
 form{
   margin-top:clamp(48px,5.2vw,68px);
-  display:flex;align-items:flex-end;gap:24px;max-width:440px;
+  display:flex;align-items:flex-end;gap:16px;max-width:460px;
 }
 .field{flex:1;min-width:0;}
 label{
   display:block;font-size:var(--fs-xs);font-weight:500;
   letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);
+  transition:color .45s var(--ease);
 }
+.field:focus-within label{color:var(--ink);}
 input[type="email"]{
-  width:100%;margin-top:10px;padding:6px 0 12px;
+  width:100%;height:50px;margin-top:10px;padding:6px 0 12px;
   background:none;border:none;border-radius:0;
-  border-bottom:1px solid var(--line-strong);
+  border-bottom:1px solid var(--field-line);
   font:inherit;font-size:var(--fs-md);color:var(--ink);
-  transition:border-color .45s var(--ease);
+  transition:border-color .45s var(--ease),box-shadow .45s var(--ease);
 }
-input[type="email"]::placeholder{color:rgba(107,101,96,0.5);}
-input[type="email"]:focus{outline:none;border-bottom-color:var(--ink);}
+input[type="email"]::placeholder{color:var(--muted);opacity:1;}
+/* Focus: the line turns solid ink and doubles to 2px (the shadow adds the
+   second pixel without shifting layout); the label darkens with it */
+input[type="email"]:focus{outline:none;border-bottom-color:var(--ink);box-shadow:0 1px 0 0 var(--ink);}
 
-button{
-  flex:none;padding:6px 0 12px;
-  background:none;border:none;border-radius:0;border-bottom:1px solid var(--ink);
+/* A real button shape, as on Aesop's own pages — 50px, matching the field */
+button[type="submit"]{
+  flex:none;height:50px;padding:0 24px;
+  background:none;border:1px solid var(--ink);border-radius:2px;
   font:inherit;font-size:var(--fs-xs);font-weight:600;
   letter-spacing:0.16em;text-transform:uppercase;color:var(--ink);
-  cursor:pointer;transition:opacity .45s var(--ease);
+  cursor:pointer;
+  transition:background-color .45s var(--ease),color .45s var(--ease);
 }
-button:hover{opacity:0.55;}
-button .arrow{display:inline-block;margin-left:10px;transition:transform .45s var(--ease);}
-button:hover .arrow{transform:translateX(4px);}
+button[type="submit"]:hover{background:var(--ink);color:var(--paper);}
+button[type="submit"]:focus-visible{outline:2px solid var(--ink);outline-offset:3px;}
+button[type="submit"] .arrow{display:inline-block;margin-left:10px;transition:transform .45s var(--ease);}
+button[type="submit"]:hover .arrow{transform:translateX(4px);}
 
 .hint{margin-top:20px;font-size:var(--fs-sm);color:var(--muted);min-height:1.6em;}
 .nojs-fallback{margin-top:28px;font-size:var(--fs-sm);}
@@ -228,9 +263,9 @@ button:hover .arrow{transform:translateX(4px);}
 }
 @media (max-width:560px){
   .masthead{padding:20px 24px;}
-  .hero-media{aspect-ratio:4/3;}
-  form{flex-direction:column;align-items:stretch;gap:28px;}
-  button{align-self:flex-start;}
+  .hero-media{aspect-ratio:3/2;}
+  form{flex-direction:column;align-items:stretch;gap:20px;max-width:none;}
+  button[type="submit"]{width:100%;}
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -255,12 +290,24 @@ button:hover .arrow{transform:translateX(4px);}
     <div class="frame frame-2"></div>
     <div class="frame frame-3"></div>
     <div class="frame frame-4"></div>
-    <span class="plate"><span class="bar"></span>Fig. <span class="num" id="fignum">01</span></span>
+    <div class="plate">
+      <span class="bar" aria-hidden="true"></span>
+      <span>Fig. <span class="num" id="fignum">01</span></span>
+      <button class="pause" id="pause" type="button" aria-label="Pause slideshow" data-state="playing" hidden><span class="ico" aria-hidden="true"></span></button>
+    </div>
   </div>
 
   <div class="hero-copy">
     <div class="copy-inner">
-      <h1>Hello.<br><span class="cycle" id="cycle">Good to see you.</span></h1>
+      <h1>
+        <span class="greet">Hello.</span>
+        <span class="cycle" id="cycle">
+          <span class="phrase on">Good to see you.</span>
+          <span class="phrase">Won&rsquo;t be long.</span>
+          <span class="phrase">Nearly there.</span>
+          <span class="phrase">See you soon.</span>
+        </span>
+      </h1>
 
       <form id="notify">
         <div class="field">
@@ -306,22 +353,25 @@ button:hover .arrow{transform:translateX(4px);}
   });
 })();
 
-/* Slow cycle: hero image, headline line, and plate number move together.
-   Holds still for anyone who prefers reduced motion. */
+/* Slow cycle: hero image, headline phrase, and plate number move together.
+   Holds still for anyone who prefers reduced motion, pauses while the
+   visitor is in the form, and can be paused from the plate. */
 (function () {
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-  if (reduce.matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  var frames = document.querySelectorAll('.hero-media .frame');
-  var cycle  = document.getElementById('cycle');
-  var fignum = document.getElementById('fignum');
-  if (frames.length < 2 || !cycle) return;
+  var frames  = document.querySelectorAll('.hero-media .frame');
+  var phrases = document.querySelectorAll('#cycle .phrase');
+  var fignum  = document.getElementById('fignum');
+  var toggle  = document.getElementById('pause');
+  var form    = document.getElementById('notify');
+  if (frames.length < 2) return;
 
-  var lines = ['Good to see you.', 'Won’t be long.', 'Nearly there.', 'See you soon.'];
   var i = 0;
   var DWELL = 4200;   /* time each state is held */
-  var FADE  = 550;    /* matches the CSS transition */
-  var timer;
+  var FADE  = 550;    /* matches the CSS transitions */
+  var timer = null;
+  var pausedByUser = false;
+  var inForm = false;
 
   function step() {
     var next = (i + 1) % frames.length;
@@ -330,28 +380,50 @@ button:hover .arrow{transform:translateX(4px);}
     frames[i].classList.remove('on');
     frames[next].classList.add('on');
 
-    /* words fade down, swap, rise back */
-    cycle.classList.add('out');
+    /* phrases swap classes; CSS sequences the fade-out and rise */
+    if (phrases.length) {
+      phrases[i % phrases.length].classList.remove('on');
+      phrases[next % phrases.length].classList.add('on');
+    }
+
     fignum.classList.add('out');
     setTimeout(function () {
-      cycle.textContent = lines[next % lines.length];
       fignum.textContent = String(next + 1).padStart(2, '0');
-      cycle.classList.remove('out');
       fignum.classList.remove('out');
     }, FADE);
 
     i = next;
   }
 
-  function start() { timer = setInterval(step, DWELL); }
-  function stop()  { clearInterval(timer); }
+  function stop()  { clearInterval(timer); timer = null; }
+  function start() {
+    if (timer || pausedByUser || inForm || document.hidden) return;
+    timer = setInterval(step, DWELL);
+  }
 
-  start();
+  /* Pause / play from the plate */
+  toggle.hidden = false;
+  toggle.addEventListener('click', function () {
+    pausedByUser = !pausedByUser;
+    toggle.dataset.state = pausedByUser ? 'paused' : 'playing';
+    toggle.setAttribute('aria-label', pausedByUser ? 'Play slideshow' : 'Pause slideshow');
+    if (pausedByUser) { stop(); } else { start(); }
+  });
+
+  /* Hold still while the visitor is typing */
+  form.addEventListener('focusin', function () { inForm = true; stop(); });
+  form.addEventListener('focusout', function (e) {
+    if (form.contains(e.relatedTarget)) return;
+    inForm = false;
+    start();
+  });
 
   /* Don't animate in a background tab */
   document.addEventListener('visibilitychange', function () {
-    if (document.hidden) { stop(); } else { stop(); start(); }
+    if (document.hidden) { stop(); } else { start(); }
   });
+
+  start();
 })();
 </script>
 
