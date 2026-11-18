@@ -220,3 +220,31 @@ table.mini th { color: var(--muted-text); font-weight: 500; }
 table.mini small { color: var(--muted-text); display: block; }
 table.mini .v1 { color: var(--bull); font-weight: 600; } table.mini .v-1 { color: var(--bear); font-weight: 600; }
 table.mini tr.base td { font-style: italic; color: var(--muted-text); }
+
+/* options panel */
+.opt-panel { margin-top: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 0 12px; }
+.opt-panel > summary { cursor: pointer; padding: 10px 0; font-weight: 600; }
+.opt-panel[open] > summary { border-bottom: 1px solid var(--border); margin-bottom: 10px; }
+#opt-body { padding-bottom: 12px; }
+#opt-body.busy { opacity: 0.6; }
+.opt-controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+.ocards { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-bottom: 12px; }
+.ocard { border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; background: var(--bg); min-width: 0; }
+.ocard small { display: block; color: var(--muted-text); font-size: 11px; }
+.ocard b { display: block; font-size: 15px; }
+.ocard span { display: block; font-size: 11px; color: var(--muted-text); }
+.ocard.warn { border-color: var(--warn); }
+.ocard.warn span { color: var(--warn); }
+.chain-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 6px; max-height: 560px; overflow-y: auto; }
+table.chain { border-collapse: collapse; width: 100%; font-size: 12px; white-space: nowrap; }
+table.chain th, table.chain td { padding: 3px 6px; text-align: right; border-bottom: 1px solid var(--grid); }
+table.chain thead th { position: sticky; top: 0; background: var(--surface); color: var(--muted-text); font-weight: 500; z-index: 1; }
+table.chain thead tr:nth-child(2) th { top: 22px; }
+table.chain th.side { text-align: center; color: var(--text); font-weight: 600; }
+table.chain th.strike { text-align: center; background: var(--bg); color: var(--text); font-weight: 500; }
+table.chain th.strike.in-range { font-weight: 700; }
+table.chain th.strike.maxpain { text-decoration: underline; }
+table.chain td.itm { background: color-mix(in srgb, var(--accent) 9%, transparent); }
+table.chain td.thin { color: var(--muted-text); }
+table.chain td i { font-style: normal; color: var(--warn); margin-left: 3px; cursor: help; }
+table.chain tr.spot-row td { text-align: center; background: color-mix(in srgb, var(--accent) 16%, transparent); font-weight: 600; color: var(--text); }

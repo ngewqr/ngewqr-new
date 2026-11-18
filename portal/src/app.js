@@ -7,6 +7,7 @@ import { rsiValues } from './indicators/rsi.js';
 import { atrValues } from './indicators/atr.js';
 import { rebase, stats } from './compare.js';
 import { renderChart, formatTime } from './chart.js';
+import { initOptions, optionsSymbolChanged } from './options.js';
 import { stanceSeries, currentStance } from './analysis/stance.js';
 import { scorecard, baseline, conditionalStats, HORIZONS } from './analysis/scorecard.js';
 
@@ -179,6 +180,7 @@ async function load() {
   model = compute(results[0].value, results.slice(1).map((r, i) => (r.status === 'fulfilled' ? r.value : { symbol: state.cmp[i], bars: null })));
   draw();
   loadMtf(token);
+  optionsSymbolChanged(state.t);
   if (new URLSearchParams(location.search).has('debug')) globalThis.__taModel = model; // test hook
   document.body.dataset.ready = `${state.t}|${state.tf}|${state.cmp.join(',')}`;
 }
@@ -348,5 +350,6 @@ function drawCompareTable(mode) {
 // ── Boot ───────────────────────────────────────────────────────────────────
 applyPrefs();
 buildControls();
+initOptions(() => state.t);
 readUrl();
 load();

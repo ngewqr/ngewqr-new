@@ -37,3 +37,21 @@ export function fetchSeries(symbol, tf) {
   promise.catch(() => cache.delete(key));
   return promise;
 }
+
+/** Options chain for one expiry (default: Yahoo's nearest). Cached 60 s. */
+export function fetchOptions(symbol, date) {
+  const key = `opt|${symbol}|${date || ''}`;
+  const hit = cache.get(key);
+  if (hit && Date.now() - hit.at < 60_000) return hit.promise;
+  const url = `${API_BASE}/options?symbol=${encodeURIComponent(symbol)}${date ? `&date=${date}` : ''}`;
+  const promise = fetch(url, { credentials: 'include' }).then(async (res) => {
+    let body = null;
+    try { body = await res.json(); } catch { /* non-JSON */ }
+    if (!res.ok || !body) throw new Error(`${symbol} options: ${res.status === 403 ? 'Not signed in (Access)' : body?.error || `HTTP ${res.status}`}`);
+    if (!body.expirations?.length) throw new Error(`${symbol}: no listed options`);
+    return body;
+  });
+  cache.set(key, { at: Date.now(), promise });
+  promise.catch(() => cache.delete(key));
+  return promise;
+}
