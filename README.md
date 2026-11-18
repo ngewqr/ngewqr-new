@@ -19,6 +19,8 @@ at [ngewqr.com](https://ngewqr.com).
 | `CNAME` | Custom domain for GitHub Pages (`ngewqr.com`) |
 | `.nojekyll` | Tells Pages to skip Jekyll processing |
 | `robots.txt` | Allows all crawlers |
+| `portal/`, `worker/` | Private TA portal (Cloudflare, behind Access). **Not** deployed to GitHub Pages; see `portal/README.md` |
+| `.github/workflows/pages.yml` | Deploys only the public site files to Pages |
 
 ## Editing the Selection
 
@@ -32,7 +34,8 @@ unlinked ones.
 
 ## Deploying
 
-1. Repo Settings → Pages → Deploy from a branch → `main` / root.
+1. Repo Settings → Pages → Source → **GitHub Actions** (the workflow publishes
+   only the site files; deploying from the branch root would expose `portal/`).
 2. At the domain registrar, point `ngewqr.com` at GitHub Pages:
    - `A` records for the apex: `185.199.108.153`, `185.199.109.153`,
      `185.199.110.153`, `185.199.111.153`

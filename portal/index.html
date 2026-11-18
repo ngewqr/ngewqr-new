@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>TA Portal</title>
+<!-- Data API base; default is the same-origin /api Worker route. -->
+<meta name="ta-api-base" content="/api">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/lightweight-charts@5.0.9/dist/lightweight-charts.standalone.production.js" integrity="sha384-6/iv/tWhS2LqjhNmDWcisQfhsuS0IqxtaOo1ZnA8dzgpK1sYsn8Al1icSvt0qirp" crossorigin="anonymous"></script>
+<script type="module" src="src/app.js"></script>
+</head>
+<body>
+<header class="top">
+  <form id="ticker-form" class="ticker" autocomplete="off">
+    <label for="ticker" class="vh">Ticker</label>
+    <input id="ticker" name="ticker" spellcheck="false" maxlength="15" placeholder="Ticker">
+    <button type="submit">Go</button>
+  </form>
+  <nav id="tf-bar" class="tf" aria-label="Timeframe"></nav>
+  <div class="prefs">
+    <button type="button" id="palette-btn" aria-pressed="false" title="Colorblind-safe palette">CB palette</button>
+    <button type="button" id="theme-btn" title="Toggle dark/light">Theme</button>
+  </div>
+</header>
+
+<section class="bar">
+  <form id="cmp-form" class="cmp" autocomplete="off">
+    <label for="cmp-input">Compare</label>
+    <input id="cmp-input" spellcheck="false" placeholder="e.g. MSFT, NVDA">
+    <button type="submit">Add</button>
+  </form>
+  <div id="cmp-quick" class="cmp-quick"></div>
+  <div id="cmp-list" class="cmp-list"></div>
+</section>
+
+<section id="ind-bar" class="bar ind" aria-label="Indicators"></section>
+
+<div id="status" class="status" role="status" hidden></div>
+
+<main class="layout">
+  <div class="main-col">
+    <div id="quote" class="quote"></div>
+    <div class="chart-wrap">
+      <div id="chart" class="chart"></div>
+      <div id="tooltip" class="tooltip" hidden></div>
+    </div>
+    <div id="cmp-table" class="cmp-table"></div>
+  </div>
+  <aside id="summary" class="summary" aria-label="Summary"></aside>
+</main>
+
+<footer class="foot">Personal analysis only. Data from Yahoo Finance, may be delayed. Not investment advice.</footer>
+</body>
+</html>
