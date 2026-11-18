@@ -45,19 +45,23 @@ Theme and colorblind palette are per-viewer (localStorage).
 | Chart markers | SMA20 crosses appear only in the summary panel (too frequent for markers) |
 | Yahoo quirks | Live "today" weekly bar folded into the current week; flat zero-volume 16:00 closing print dropped |
 
-## Deploy (Cloudflare)
+## Deployment (live)
 
-1. **Pages project** from this repo: build command none, output directory `portal`.
-   Attach a custom hostname (the portal host).
-2. **Worker**: `cd worker && npx wrangler deploy --route "<portal-host>/api/*"`.
-   Set secrets: `wrangler secret put ACCESS_TEAM_DOMAIN`, `wrangler secret put ACCESS_AUD`.
-   `workers_dev = false` keeps the un-gated workers.dev URL off.
-3. **Access application** (Zero Trust → Access → Applications → Self-hosted):
-   hostname = portal host (covers `/api/*` too). Policy: Include → Emails (owner's
-   allow-list). Session duration 24 h. Copy its AUD tag into `ACCESS_AUD`.
-4. If the API ever moves to another origin: set `<meta name="ta-api-base">` in
-   `index.html`, `ALLOWED_ORIGIN` on the Worker, and add the origin to
-   `connect-src` in `_headers`.
+| Item | Value |
+|---|---|
+| URL | https://ta.ngewqr.com |
+| Hosting | One Cloudflare Worker, `ta-portal`: static files from `portal/` (assets binding) plus the `/api/*` Yahoo proxy |
+| Gate | Access application "TA Portal" on `ta.ngewqr.com`, policy Include → Emails, session 24 h |
+| workers.dev / preview URLs | Disabled (not behind Access) |
+| Secrets | `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD`, already set on the Worker |
+
+Redeploy after changes (uploads `portal/` minus `.assetsignore`, keeps secrets):
+
+```bash
+cd worker && npx wrangler deploy
+```
+
+Add or remove allowed people in Zero Trust → Access → Applications → TA Portal → Policies.
 
 The Worker verifies the `Cf-Access-Jwt-Assertion` JWT (signature, `aud`, `iss`,
 `exp`) and returns 403 without it. Never commit emails, tokens or account IDs.
