@@ -1,0 +1,172 @@
+{
+  "rsi_stockcharts": {
+    "note": "Classic 14-period Wilder RSI worked example (StockCharts cs-rsi spreadsheet, 4 dp closes). Expected values published to 2 dp, starting at index 14.",
+    "closes": [
+      44.3389,
+      44.0902,
+      44.1497,
+      43.6124,
+      44.3278,
+      44.8264,
+      45.0955,
+      45.4245,
+      45.8433,
+      46.0826,
+      45.8931,
+      46.0328,
+      45.614,
+      46.282,
+      46.282,
+      46.0028,
+      46.0328,
+      46.4116,
+      46.2222,
+      45.6439,
+      46.2122,
+      46.2521,
+      45.7137,
+      46.4515,
+      45.7835,
+      45.3548,
+      44.0288,
+      44.1783,
+      44.2181,
+      44.5672,
+      43.4205,
+      42.6628,
+      43.1314
+    ],
+    "expected": [
+      70.53,
+      66.32,
+      66.55,
+      69.41,
+      66.36,
+      57.97,
+      62.93,
+      63.26,
+      56.06,
+      62.38,
+      54.71,
+      50.42,
+      39.99,
+      41.46,
+      41.87,
+      45.46,
+      37.3,
+      33.08,
+      37.77
+    ]
+  },
+  "ema3": {
+    "note": "alpha = 0.5, seed = SMA3 of first 3 = 4",
+    "values": [
+      2,
+      4,
+      6,
+      8,
+      12,
+      14,
+      16
+    ],
+    "expected": [
+      null,
+      null,
+      4,
+      6,
+      9,
+      11.5,
+      13.75
+    ]
+  },
+  "bollinger5": {
+    "note": "mean 3, population variance 2, sigma 1.414214",
+    "closes": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "upper": 5.8284,
+    "middle": 3,
+    "lower": 0.1716
+  },
+  "atr3": {
+    "note": "TR = 2, 2, 2, 2.5; ATR seed = 2 at index 2; then (2*2 + 2.5)/3",
+    "bars": [
+      {
+        "time": "2024-01-02",
+        "open": 9,
+        "high": 10,
+        "low": 8,
+        "close": 9,
+        "volume": 1
+      },
+      {
+        "time": "2024-01-03",
+        "open": 9,
+        "high": 11,
+        "low": 9,
+        "close": 10,
+        "volume": 1
+      },
+      {
+        "time": "2024-01-04",
+        "open": 10,
+        "high": 12,
+        "low": 10,
+        "close": 11.5,
+        "volume": 1
+      },
+      {
+        "time": "2024-01-05",
+        "open": 11,
+        "high": 11,
+        "low": 9,
+        "close": 9.5,
+        "volume": 1
+      }
+    ],
+    "expected": [
+      null,
+      null,
+      2,
+      2.1667
+    ]
+  },
+  "vwap": {
+    "note": "Two New York sessions; VWAP resets at the second. Typical prices 10, 12 | 20.",
+    "bars": [
+      {
+        "time": 1736173800,
+        "open": 10,
+        "high": 11,
+        "low": 9,
+        "close": 10,
+        "volume": 100
+      },
+      {
+        "time": 1736174100,
+        "open": 12,
+        "high": 13,
+        "low": 11,
+        "close": 12,
+        "volume": 300
+      },
+      {
+        "time": 1736260200,
+        "open": 20,
+        "high": 21,
+        "low": 19,
+        "close": 20,
+        "volume": 50
+      }
+    ],
+    "expected": [
+      10,
+      11.5,
+      20
+    ]
+  }
+}
