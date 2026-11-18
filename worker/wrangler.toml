@@ -1,20 +1,19 @@
-name = "ta-portal-api"
+name = "ta-portal"
 main = "src/index.js"
 compatibility_date = "2025-06-01"
 
-# Never expose the Worker on *.workers.dev: that URL is not behind Access.
+# One Worker serves the portal's static files and the /api/* Yahoo proxy on
+# ta.ngewqr.com, which is covered by the "TA Portal" Cloudflare Access app.
+# Never expose it on *.workers.dev: that URL is not behind Access.
 workers_dev = false
+preview_urls = false
+routes = [{ pattern = "ta.ngewqr.com", custom_domain = true }]
 
-# Serve the Worker under the portal hostname so one Access application covers
-# both the pages and the data feed. Set the real hostname at deploy time:
-#   wrangler deploy --route "<portal-host>/api/*"
-# or uncomment and fill in locally (do not commit account IDs or emails):
-# routes = [{ pattern = "<portal-host>/api/*", zone_name = "<zone>" }]
+[assets]
+directory = "../portal"
+binding = "ASSETS"
 
-# Secrets (set with `wrangler secret put <NAME>`, never committed):
-#   ACCESS_TEAM_DOMAIN   e.g. <team>.cloudflareaccess.com
-#   ACCESS_AUD           Access application AUD tag
-# Optional plain var, only when the portal is served from another origin:
-#   ALLOWED_ORIGIN       https://<portal-host>
-# Local dev only, in .dev.vars (gitignored):
-#   DEV_BYPASS_ACCESS = "true"
+# Secrets (wrangler secret put <NAME>; never committed):
+#   ACCESS_TEAM_DOMAIN   Zero Trust team domain (<team>.cloudflareaccess.com)
+#   ACCESS_AUD           AUD tag of the "TA Portal" Access application
+# Local dev only, in .dev.vars (gitignored): DEV_BYPASS_ACCESS = "true"

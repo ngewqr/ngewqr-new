@@ -131,6 +131,9 @@ export default {
     if (!auth.ok) return json({ error: auth.error }, auth.status, env, request);
 
     const url = new URL(request.url);
+    // Static portal files (assets binding). Matching files are normally served
+    // before the Worker runs; this covers anything outside /api that falls through.
+    if (env.ASSETS && !url.pathname.startsWith('/api/')) return env.ASSETS.fetch(request);
     const path = url.pathname.replace(/^\/api/, '');
     const handler = path === '/chart' ? handleChart : path === '/options' ? handleOptions : null;
     if (!handler) return json({ error: 'Not found' }, 404, env, request);
