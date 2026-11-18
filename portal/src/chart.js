@@ -173,10 +173,10 @@ export function renderChart(host, view, tooltipEl) {
         ser = chart.addSeries(LineSeries, {
           color: colors[s.color] || colors.c1, lineWidth: 1.5, priceLineVisible: false,
           lastValueVisible: true, crosshairMarkerVisible: false,
-          ...(module.id === 'volume' ? { priceFormat: { type: 'volume' } } : {}),
+          ...(module.id === 'volume' || s.volume ? { priceFormat: { type: 'volume' } } : {}),
         }, pane);
         ser.setData(s.data);
-        addLookup(s.id.toUpperCase(), s.data, module.id === 'volume' ? (v) => Math.round(v).toLocaleString('en-US') : undefined);
+        addLookup(s.id.toUpperCase(), s.data, module.id === 'volume' || s.volume ? (v) => Math.round(v).toLocaleString('en-US') : undefined);
       }
       if (!first || (first.seriesType() === 'Histogram' && s.type === 'line')) first = ser;
     }

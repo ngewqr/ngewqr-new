@@ -7,9 +7,13 @@ import volume from './volume.js';
 import rsi from './rsi.js';
 import macd from './macd.js';
 import atr from './atr.js';
+import adx from './adx.js';
+import stochastic from './stochastic.js';
+import obv from './obv.js';
+import squeeze from './squeeze.js';
 import theories from '../theories/index.js';
 
-export const INDICATORS = [sma, ema, bollinger, vwap, volume, rsi, macd, atr];
+export const INDICATORS = [sma, ema, bollinger, vwap, volume, obv, rsi, stochastic, macd, adx, squeeze, atr];
 export const THEORIES = theories;
 export const MODULES = [...INDICATORS, ...THEORIES];
 
