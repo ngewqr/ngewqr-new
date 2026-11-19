@@ -73,7 +73,7 @@ export function normalizeChart(json, interval) {
   return { symbol: meta.symbol || '', currency: meta.currency || '', tz, bars };
 }
 
-/** Yahoo options JSON → compact chain. */
+/** Yahoo options JSON → compact chain plus the underlying facts options math needs. */
 export function normalizeOptions(json) {
   const r = json?.optionChain?.result?.[0];
   if (!r) {
@@ -91,12 +91,27 @@ export function normalizeOptions(json) {
     openInterest: o.openInterest ?? 0,
     iv: o.impliedVolatility ?? null,
     itm: !!o.inTheMoney,
+    lastTrade: o.lastTradeDate ?? null,
   });
   const chain = r.options?.[0] || {};
+  const q = r.quote || {};
+  const now = q.regularMarketTime ?? Math.floor(Date.now() / 1000);
+  // Next earnings: the start of the announced window if it is ahead, else the last
+  // reported timestamp if it is still ahead (Yahoo fills these inconsistently).
+  const nextEarningsTime = [q.earningsTimestampStart, q.earningsTimestamp].find((t) => typeof t === 'number' && t > now) ?? null;
   return {
     symbol: r.underlyingSymbol,
     expirations: r.expirationDates || [],
     expiration: chain.expirationDate ?? null,
+    underlying: {
+      price: q.regularMarketPrice ?? null,
+      time: q.regularMarketTime ?? null,
+      currency: q.currency ?? null,
+      tz: q.exchangeTimezoneName ?? 'America/New_York',
+      marketState: q.marketState ?? null,
+      dividendYield: typeof q.trailingAnnualDividendYield === 'number' ? q.trailingAnnualDividendYield : null,
+      nextEarnings: nextEarningsTime === null ? null : { time: nextEarningsTime, estimate: !!q.isEarningsDateEstimate },
+    },
     calls: (chain.calls || []).map(pick),
     puts: (chain.puts || []).map(pick),
   };

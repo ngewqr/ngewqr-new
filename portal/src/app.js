@@ -7,6 +7,9 @@ import { rsiValues } from './indicators/rsi.js';
 import { atrValues } from './indicators/atr.js';
 import { rebase, stats } from './compare.js';
 import { renderChart, formatTime } from './chart.js';
+import { initOptions, optionsSymbolChanged } from './options.js';
+import { stanceSeries, currentStance } from './analysis/stance.js';
+import { scorecard, baseline, conditionalStats, HORIZONS } from './analysis/scorecard.js';
 
 const $ = (sel) => document.querySelector(sel);
 const SECTOR_ETFS = ['XLK', 'XLF', 'XLV', 'XLE', 'XLY', 'XLP', 'XLI', 'XLU', 'XLB', 'XLRE', 'XLC'];
@@ -176,6 +179,8 @@ async function load() {
   if (errors.length) showStatus(errors.join(' · '));
   model = compute(results[0].value, results.slice(1).map((r, i) => (r.status === 'fulfilled' ? r.value : { symbol: state.cmp[i], bars: null })));
   draw();
+  loadMtf(token);
+  optionsSymbolChanged(state.t);
   if (new URLSearchParams(location.search).has('debug')) globalThis.__taModel = model; // test hook
   document.body.dataset.ready = `${state.t}|${state.tf}|${state.cmp.join(',')}`;
 }
@@ -229,7 +234,27 @@ function compute(primary, others) {
     compare = { ...rb, statRows };
   }
 
-  return { primary, visible, layers, divergence, allSignals, levels, compare, intraday: t.intraday };
+  const { score } = stanceSeries(all);
+  const stance = currentStance(all);
+  const history = {
+    bull: conditionalStats(all, (i) => score[i] !== null && score[i] >= 15),
+    bear: conditionalStats(all, (i) => score[i] !== null && score[i] <= -15),
+    base: baseline(all),
+  };
+  const card = scorecard(all, defaultSignals(all));
+
+  return { primary, visible, layers, divergence, allSignals, levels, compare, intraday: t.intraday, stance, history, card, nBars: all.length, mtf: null };
+}
+
+// ── Stance across timeframes (one per bar interval) ───────────────────────
+const MTF = [['5m', '1D'], ['15m', '5D'], ['1h', '1M'], ['Daily', '1Y'], ['Weekly', '5Y']];
+
+async function loadMtf(token) {
+  const sym = state.t;
+  const res = await Promise.allSettled(MTF.map(([, tf]) => fetchSeries(sym, tf)));
+  if (token !== loadToken || !model) return;
+  model.mtf = MTF.map(([label], i) => ({ label, stance: res[i].status === 'fulfilled' ? currentStance(res[i].value.bars) : null }));
+  drawSummary();
 }
 
 // ── Draw ───────────────────────────────────────────────────────────────────
@@ -267,6 +292,38 @@ function drawHeader() {
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
+const pctTxt = (v, dp = 1) => (v === null ? 'n/a' : `${v >= 0 ? '+' : ''}${v.toFixed(dp)}%`);
+
+function stanceHtml() {
+  const st = model.stance;
+  if (!st) return '<h2>Technical stance</h2><p class="dim">Not enough history for a stance on this timeframe.</p>';
+  const votes = st.votes.map((v) => `<tr><td>${v.group}</td><td>${esc(v.name)}</td><td>${esc(v.reading)}</td><td class="vote v${v.vote}">${v.vote > 0 ? '+1' : v.vote < 0 ? '−1' : '0'}</td></tr>`).join('');
+  const w = st.weights;
+  const mtf = model.mtf
+    ? `<div class="mtf">${model.mtf.map((m) => `<span class="mtf-cell tone-${m.stance?.tone || 'none'}"><small>${m.label}</small>${m.stance ? `${m.stance.label}<i>${Math.round(m.stance.score)}</i>` : 'n/a'}</span>`).join('')}</div>`
+    : '<div class="mtf dim">Loading other timeframes…</div>';
+  const h = model.history;
+  const row = (name, s) => `<tr><td>${name}</td>${HORIZONS.map((k) => `<td>${s[k].n ? `${pctTxt(s[k].avg)} <small>${s[k].pctUp.toFixed(0)}% up</small>` : 'n/a'}</td>`).join('')}<td>${s[HORIZONS[0]].n}</td></tr>`;
+  return `<h2>Technical stance</h2>
+    <div class="stance tone-${st.tone}"><b>${st.label}</b> <span>${st.score >= 0 ? '+' : ''}${Math.round(st.score)}</span>
+    <p>${st.positive} of ${st.votes.length} indicators positive, ${st.negative} negative · ADX ${st.adx.toFixed(1)} (${st.adx >= 25 ? 'trend weighted' : st.adx < 20 ? 'momentum weighted' : 'balanced'})</p></div>
+    ${mtf}
+    <details><summary>Why: indicator votes</summary><table class="mini"><thead><tr><th>Group</th><th>Indicator</th><th>Reading</th><th>Vote</th></tr></thead><tbody>${votes}</tbody></table>
+    <p class="dim">Weights: trend ${(w.trend * 100).toFixed(0)}%, momentum ${(w.momentum * 100).toFixed(0)}%, volume ${(w.volume * 100).toFixed(0)}%. Describes the indicators; not a recommendation.</p></details>
+    <details><summary>Historical check (this ticker, ${model.nBars} bars)</summary><table class="mini"><thead><tr><th>When stance was</th>${HORIZONS.map((k) => `<th>+${k} bars</th>`).join('')}<th>n</th></tr></thead><tbody>
+    ${row('Bullish or stronger', h.bull)}${row('Bearish or weaker', h.bear)}${row('Any bar (baseline)', h.base)}</tbody></table>
+    <p class="dim">Average forward return and share of positive outcomes. Overlapping windows; small samples are noisy. Past behaviour only.</p></details>`;
+}
+
+function scorecardHtml() {
+  if (!model.card.length) return '';
+  const rows = model.card.map((c) => `<tr class="tone-${c.tone}"><td>${esc(c.label)}</td><td>${c.count}</td>${HORIZONS.map((k) => `<td>${c.stats[k].n ? `${pctTxt(c.stats[k].avg)} <small>${c.stats[k].pctUp.toFixed(0)}%</small>` : 'n/a'}</td>`).join('')}</tr>`).join('');
+  const b = model.history.base;
+  return `<details><summary>Signal scorecard (${model.nBars} bars)</summary><table class="mini"><thead><tr><th>Signal</th><th>n</th>${HORIZONS.map((k) => `<th>+${k}</th>`).join('')}</tr></thead><tbody>${rows}
+    <tr class="base"><td>Baseline (any bar)</td><td>${b[HORIZONS[0]].n}</td>${HORIZONS.map((k) => `<td>${pctTxt(b[k].avg)} <small>${b[k].pctUp?.toFixed(0) ?? 'n/a'}%</small></td>`).join('')}</tr></tbody></table>
+    <p class="dim">Average return and % of cases up, N bars after each signal, over the fetched history. Compare against the baseline row.</p></details>`;
+}
+
 function drawSummary() {
   const ind = model.layers.map((l) => `<li><span class="k">${esc(l.module.name)}</span>${esc(l.summary.text)}</li>`).join('');
   const lv = model.levels
@@ -276,7 +333,7 @@ function drawSummary() {
     ].join(' · ') || 'none detected'}</li>`
     : '';
   const sigs = model.allSignals.slice(0, 60).map((s) => `<li class="tone-${s.tone}"><span class="k">${formatTime(s.time)}</span>${esc(s.label)}</li>`).join('');
-  $('#summary').innerHTML = `<h2>Indicators</h2><ul>${ind}${lv}</ul>`
+  $('#summary').innerHTML = `${stanceHtml()}<h2>Indicators</h2><ul>${ind}${lv}</ul>${scorecardHtml()}`
     + `<h2>Signals in view <small>${model.allSignals.length}</small></h2>`
     + (sigs ? `<ul class="signals">${sigs}</ul>` : '<p class="dim">No signals in this window.</p>');
 }
@@ -293,5 +350,6 @@ function drawCompareTable(mode) {
 // ── Boot ───────────────────────────────────────────────────────────────────
 applyPrefs();
 buildControls();
+initOptions(() => state.t);
 readUrl();
 load();
