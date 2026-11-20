@@ -3,7 +3,7 @@ main = "src/index.js"
 compatibility_date = "2025-06-01"
 
 # One Worker serves the portal's static files and the /api/* Yahoo proxy on
-# ta.ngewqr.com, which is covered by the "TA Portal" Cloudflare Access app.
+# ta.ngewqr.com, which is covered by the "Chartroom" Cloudflare Access app.
 # Never expose it on *.workers.dev: that URL is not behind Access.
 workers_dev = false
 preview_urls = false
@@ -15,5 +15,5 @@ binding = "ASSETS"
 
 # Secrets (wrangler secret put <NAME>; never committed):
 #   ACCESS_TEAM_DOMAIN   Zero Trust team domain (<team>.cloudflareaccess.com)
-#   ACCESS_AUD           AUD tag of the "TA Portal" Access application
+#   ACCESS_AUD           AUD tag of the "Chartroom" Access application
 # Local dev only, in .dev.vars (gitignored): DEV_BYPASS_ACCESS = "true"
