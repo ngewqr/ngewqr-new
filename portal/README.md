@@ -55,7 +55,10 @@ Theme and colorblind palette are per-viewer (localStorage).
 | workers.dev / preview URLs | Disabled (not behind Access) |
 | Secrets | `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD`, already set on the Worker |
 
-Redeploy after changes (uploads `portal/` minus `.assetsignore`, keeps secrets):
+Deploys are automatic: every merge to `main` that touches `portal/` or `worker/`
+runs `.github/workflows/deploy-chartroom.yml` (tests → `wrangler deploy` →
+checks the Access gate still redirects). It needs two repository secrets,
+`CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. Manual fallback:
 
 ```bash
 cd worker && npx wrangler deploy

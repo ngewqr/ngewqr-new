@@ -10,6 +10,13 @@ const nyClock = new Intl.DateTimeFormat('en-US', { timeZone: MARKET_TZ, hour: '2
 const nyDay = new Intl.DateTimeFormat('en-US', { timeZone: MARKET_TZ, month: 'short', day: 'numeric' });
 const utcDay = new Intl.DateTimeFormat('en-US', { timeZone: 'UTC', year: 'numeric', month: 'short', day: 'numeric' });
 
+/** Axis labels in New York time for intraday (unix) bars; default for dates. */
+export function nyTick(t, type) {
+  if (typeof t !== 'number') return null;
+  const d = new Date(t * 1000);
+  return type <= 2 ? nyDay.format(d) : nyClock.format(d);
+}
+
 export function timeKey(t) {
   if (t === null || t === undefined) return null;
   if (typeof t === 'object') return `${t.year}-${String(t.month).padStart(2, '0')}-${String(t.day).padStart(2, '0')}`;
@@ -79,11 +86,7 @@ export function renderChart(host, view, tooltipEl) {
       borderColor: colors.border,
       timeVisible: view.intraday,
       secondsVisible: false,
-      tickMarkFormatter: (t, type) => {
-        if (typeof t !== 'number') return null;
-        const d = new Date(t * 1000);
-        return type <= 2 ? nyDay.format(d) : nyClock.format(d);
-      },
+      tickMarkFormatter: nyTick,
     },
     localization: { timeFormatter: formatTime },
     crosshair: { mode: 0 },
