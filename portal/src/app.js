@@ -1,5 +1,5 @@
 import { TIMEFRAMES, TIMEFRAME_ORDER, BARS_PER_YEAR, visibleStartIndex } from './timeframes.js';
-import { fetchSeries, cleanSymbol } from './data.js';
+import { fetchSeries, cleanSymbol, SYMBOL_NOTES } from './data.js';
 import { MODULES, INDICATORS, THEORIES, byId, DEFAULT_ON } from './indicators/index.js';
 import { supportResistance } from './analysis/levels.js';
 import { defaultSignals, divergenceSignals } from './analysis/signals.js';
@@ -287,7 +287,8 @@ function drawHeader() {
   const cur = model.primary.currency ? ` ${model.primary.currency}` : '';
   $('#quote').innerHTML = `<b>${model.primary.symbol || state.t}</b> <span>${last.close.toFixed(2)}${cur}</span>`
     + ` <span class="${chg >= 0 ? 'pos' : 'neg'}">${chg >= 0 ? '+' : ''}${chg.toFixed(2)}% (${state.tf})</span>`
-    + ` <span class="dim">as of ${formatTime(last.time)}</span>`;
+    + ` <span class="dim">as of ${formatTime(last.time)}</span>`
+    + (SYMBOL_NOTES[state.t] ? `<span class="note">${SYMBOL_NOTES[state.t]}</span>` : '');
 }
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));

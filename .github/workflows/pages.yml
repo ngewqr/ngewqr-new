@@ -1,5 +1,5 @@
 # Deploys ONLY the public ngewqr.com site to GitHub Pages.
-# portal/ and worker/ are excluded: the TA portal is served from Cloudflare
+# portal/ and worker/ are excluded: the Chartroom portal is served from Cloudflare
 # Pages behind Cloudflare Access, never from GitHub Pages.
 # Requires: repo Settings → Pages → Source = "GitHub Actions".
 name: Deploy site to GitHub Pages

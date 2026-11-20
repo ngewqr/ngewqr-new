@@ -1,4 +1,4 @@
-# TA Portal
+# Chartroom
 
 Private technical-analysis portal: charts for 1D/5D/1M/3M/6M/1Y/5Y,
 auto-drawn indicators, support/resistance, signals, multi-ticker comparison,
@@ -51,7 +51,7 @@ Theme and colorblind palette are per-viewer (localStorage).
 |---|---|
 | URL | https://ta.ngewqr.com |
 | Hosting | One Cloudflare Worker, `ta-portal`: static files from `portal/` (assets binding) plus the `/api/*` Yahoo proxy |
-| Gate | Access application "TA Portal" on `ta.ngewqr.com`, policy Include → Emails, session 24 h |
+| Gate | Access application "Chartroom" on `ta.ngewqr.com`, policy Include → Emails, session 24 h |
 | workers.dev / preview URLs | Disabled (not behind Access) |
 | Secrets | `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD`, already set on the Worker |
 
@@ -61,7 +61,7 @@ Redeploy after changes (uploads `portal/` minus `.assetsignore`, keeps secrets):
 cd worker && npx wrangler deploy
 ```
 
-Add or remove allowed people in Zero Trust → Access → Applications → TA Portal → Policies.
+Add or remove allowed people in Zero Trust → Access → Applications → Chartroom → Policies.
 
 The Worker verifies the `Cf-Access-Jwt-Assertion` JWT (signature, `aud`, `iss`,
 `exp`) and returns 403 without it. Never commit emails, tokens or account IDs.

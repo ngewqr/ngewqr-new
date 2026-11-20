@@ -19,7 +19,7 @@ at [ngewqr.com](https://ngewqr.com).
 | `CNAME` | Custom domain for GitHub Pages (`ngewqr.com`) |
 | `.nojekyll` | Tells Pages to skip Jekyll processing |
 | `robots.txt` | Allows all crawlers |
-| `portal/`, `worker/` | Private TA portal (Cloudflare, behind Access). **Not** deployed to GitHub Pages; see `portal/README.md` |
+| `portal/`, `worker/` | Chartroom, the private market-analysis portal (Cloudflare, behind Access). **Not** deployed to GitHub Pages; see `portal/README.md` |
 | `.github/workflows/pages.yml` | Deploys only the public site files to Pages |
 
 ## Editing the Selection

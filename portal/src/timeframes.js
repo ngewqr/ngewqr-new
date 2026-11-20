@@ -23,10 +23,15 @@ const sessionFmt = new Intl.DateTimeFormat('en-CA', {
   timeZone: MARKET_TZ, year: 'numeric', month: '2-digit', day: '2-digit',
 });
 
-/** Trading-session date (YYYY-MM-DD, New York) for a bar time. */
+/**
+ * Trading-session date (YYYY-MM-DD, New York) for a bar time. The trading day
+ * rolls over at 18:00 ET, the CME/forex convention, so a futures session that
+ * opens Sunday 18:00 belongs to Monday. US stocks (09:30–16:00) are unaffected.
+ */
+export const SESSION_ROLL_S = 6 * 3600;
 export function sessionDate(time) {
   if (typeof time === 'string') return time;
-  return sessionFmt.format(new Date(time * 1000));
+  return sessionFmt.format(new Date((time + SESSION_ROLL_S) * 1000));
 }
 
 /** Subtract whole calendar months from a YYYY-MM-DD string. */
