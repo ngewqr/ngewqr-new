@@ -270,3 +270,52 @@ table.chain tr.spot-row td { text-align: center; background: color-mix(in srgb, 
 .mk-text { margin: 0; color: var(--text); }
 .mk-chart-title { font-size: 11px; margin-bottom: 2px; }
 .mk-chart { height: 120px; width: 100%; }
+
+/* view nav */
+.views { display: flex; gap: 2px; border: 1px solid var(--border); border-radius: 6px; padding: 2px; background: var(--surface); }
+.views a { padding: 3px 10px; border-radius: 4px; color: var(--muted-text); text-decoration: none; font-size: 13px; }
+.views a[aria-current="page"] { background: var(--accent); color: #fff; }
+
+/* scanner */
+.breadth { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 10px 12px; margin: 4px 0 10px; border: 1px solid var(--border); border-left: 4px solid var(--info); border-radius: 6px; background: var(--surface); }
+.breadth.tone-warn { border-left-color: var(--warn); }
+.breadth.tone-bear { border-left-color: var(--bear); }
+.breadth .score { margin-left: auto; font-size: 22px; }
+.breadth .score small { font-size: 12px; color: var(--muted-text); font-weight: 400; }
+.pill { font-size: 12px; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--info); color: var(--info); }
+.pill.tone-warn { border-color: var(--warn); color: var(--warn); }
+.pill.tone-bear { border-color: var(--bear); color: var(--bear); background: color-mix(in srgb, var(--bear) 12%, transparent); }
+.sector-bars { flex-basis: 100%; min-width: 0; max-width: 100%; overflow: hidden; display: flex; gap: 3px; align-items: flex-end; height: 46px; }
+.sb { flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; }
+.sb i { display: block; width: 100%; max-width: 34px; min-height: 2px; border-radius: 2px 2px 0 0; background: var(--up-soft); }
+.sb.neg i { background: var(--down-soft); }
+.sb.washed i { background: var(--down); }
+.sb small { font-size: 9px; text-overflow: clip; color: var(--muted-text); white-space: nowrap; overflow: hidden; max-width: 100%; }
+.scan-controls { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; margin-bottom: 8px; }
+.scan-controls .chip { display: inline-flex; gap: 6px; align-items: center; }
+.progress { height: 6px; background: var(--grid); border-radius: 3px; overflow: hidden; margin: 8px 0 4px; }
+.progress i { display: block; height: 100%; background: var(--accent); transition: width 0.2s; }
+.scan-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); }
+table.scan { border-collapse: collapse; width: 100%; font-size: 12.5px; }
+table.scan th, table.scan td { padding: 5px 8px; border-bottom: 1px solid var(--grid); text-align: left; vertical-align: top; }
+table.scan thead th { color: var(--muted-text); font-weight: 500; position: sticky; top: 0; background: var(--surface); white-space: nowrap; }
+table.scan td.fwd, table.scan th:nth-last-child(-n+4) { text-align: right; white-space: nowrap; }
+table.scan tr.tier-head th { background: var(--bg); font-weight: 600; color: var(--text); border-left: 4px solid var(--info); }
+table.scan .tier-bullish tr.tier-head th { border-left-color: var(--bull); }
+table.scan .tier-bearish tr.tier-head th { border-left-color: var(--bear); }
+table.scan .tier-mixed tr.tier-head th { border-left-color: var(--warn); }
+table.scan tr.tier-head .dim { font-weight: 400; margin-left: 6px; }
+table.scan tr.srow { cursor: pointer; }
+table.scan tr.srow:hover td { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+table.scan td small { display: block; color: var(--muted-text); }
+table.scan td.tk { white-space: nowrap; }
+.sig, .note { display: inline-block; margin: 0 4px 3px 0; padding: 0 6px; border-radius: 4px; font-size: 11.5px; border: 1px solid var(--border); white-space: nowrap; }
+.sig.tone-bull, .note.tone-bull { border-color: var(--bull); color: var(--bull); }
+.sig.tone-bear, .note.tone-bear { border-color: var(--bear); color: var(--bear); }
+.sig.tone-warn { border-color: var(--warn); color: var(--warn); }
+.spark polyline { fill: none; stroke-width: 1.5; }
+.spark.up polyline { stroke: var(--up); }
+.spark.down polyline { stroke: var(--down); }
+.record-wrap { margin: 16px 0; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 4px 14px 10px; }
+.record-wrap h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted-text); margin: 12px 0 6px; }
+table.scan tr.tier-head th { text-align: left; }

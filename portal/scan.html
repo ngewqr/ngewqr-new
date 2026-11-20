@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Scanner · Chartroom</title>
+<meta name="ta-api-base" content="/api">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/lightweight-charts@5.0.9/dist/lightweight-charts.standalone.production.js" integrity="sha384-6/iv/tWhS2LqjhNmDWcisQfhsuS0IqxtaOo1ZnA8dzgpK1sYsn8Al1icSvt0qirp" crossorigin="anonymous"></script>
+<script type="module" src="src/scan/page.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="./" aria-label="Chartroom home">Chartroom</a>
+  <nav class="views" aria-label="Views"><a href="./">Chart</a><a href="scan.html" aria-current="page">Scanner</a></nav>
+  <div class="prefs"><button type="button" id="theme-btn" title="Toggle dark/light">Theme</button></div>
+</header>
+
+<section id="market" class="market" aria-label="VIX"></section>
+<section id="breadth" aria-label="Breadth"></section>
+
+<section class="scan-wrap">
+  <div id="scan-status"></div>
+  <div id="scan-controls" class="scan-controls" hidden>
+    <label>Date <select id="scan-date"></select></label>
+    <input id="scan-search" placeholder="Filter ticker or sector" spellcheck="false">
+    <label class="chip"><input type="checkbox" id="show-quiet"><span>Show quiet</span></label>
+    <span id="scan-summary" class="dim"></span>
+  </div>
+  <div class="scan-table-wrap">
+    <table class="scan">
+      <thead><tr><th>Ticker</th><th>Sector</th><th>Close · day</th><th>Stance</th><th>Signals today</th><th>Tested (+5d)</th><th>Notes</th><th>Last 20 days</th><th>+1d</th><th>+2d</th><th>+5d</th><th>+20d</th></tr></thead>
+      <tbody id="scan-body"></tbody>
+    </table>
+  </div>
+  <section id="record" class="record-wrap"></section>
+</section>
+
+<footer class="foot">Personal analysis only. Data from Yahoo Finance, may be delayed. Not investment advice. Tiers describe what the indicators show; they are not buy or sell instructions.</footer>
+</body>
+</html>
