@@ -118,3 +118,27 @@ test('Stance series: no look-ahead, bounded', () => {
   assert.ok(full.every((v) => v === null || (v >= -100 && v <= 100)));
   assert.equal(currentStance(DAILY).votes.length, 9);
 });
+
+test('trading day rolls over at 18:00 New York', async () => {
+  const { sessionDate, visibleStartIndex } = await import('../src/timeframes.js');
+  const et = (iso) => Date.parse(iso) / 1000; // ISO with explicit offset
+  assert.equal(sessionDate(et('2026-11-19T17:55:00-05:00')), '2026-11-19');
+  assert.equal(sessionDate(et('2026-11-19T18:00:00-05:00')), '2026-11-20'); // futures evening session → next day
+  assert.equal(sessionDate(et('2026-11-20T09:30:00-05:00')), '2026-11-20');
+  assert.equal(sessionDate(et('2026-11-20T15:55:00-05:00')), '2026-11-20'); // stocks unchanged
+  assert.equal(sessionDate(et('2026-07-20T15:55:00-04:00')), '2026-07-20'); // daylight saving
+  // 24h bars every hour from Thu 18:00 to Fri 12:00 ET: 1D keeps the whole Friday session.
+  const bars = [];
+  for (let t = et('2026-11-19T12:00:00-05:00'); t <= et('2026-11-20T12:00:00-05:00'); t += 3600) bars.push({ time: t, open: 1, high: 1, low: 1, close: 1, volume: 1 });
+  assert.equal(bars[visibleStartIndex(bars, '1D')].time, et('2026-11-19T18:00:00-05:00'));
+});
+
+test('XAUUSD-style aliases resolve to futures', async () => {
+  const { cleanSymbol } = await import('../src/data.js');
+  assert.equal(cleanSymbol('xauusd'), 'GC=F');
+  assert.equal(cleanSymbol('XAU/USD'), 'GC=F');
+  assert.equal(cleanSymbol('XAGUSD'), 'SI=F');
+  assert.equal(cleanSymbol('aapl'), 'AAPL');
+  assert.equal(cleanSymbol('GC=F'), 'GC=F');
+  assert.equal(cleanSymbol('bad symbol!'), null);
+});

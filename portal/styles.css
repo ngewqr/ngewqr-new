@@ -248,3 +248,4 @@ table.chain td.itm { background: color-mix(in srgb, var(--accent) 9%, transparen
 table.chain td.thin { color: var(--muted-text); }
 table.chain td i { font-style: normal; color: var(--warn); margin-left: 3px; cursor: help; }
 table.chain tr.spot-row td { text-align: center; background: color-mix(in srgb, var(--accent) 16%, transparent); font-weight: 600; color: var(--text); }
+.quote .note { flex-basis: 100%; font-size: 12px; color: var(--muted-text); }

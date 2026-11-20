@@ -9,8 +9,16 @@ const SYMBOL_RE = /^[A-Z0-9.\-^=]{1,15}$/;
 const cache = new Map(); // key → { at, promise }
 const TTL_MS = { intraday: 60_000, daily: 15 * 60_000 };
 
+// Yahoo has no spot metals feed; these open the COMEX front-month futures instead.
+export const ALIASES = { XAUUSD: 'GC=F', GOLD: 'GC=F', XAGUSD: 'SI=F', SILVER: 'SI=F' };
+export const SYMBOL_NOTES = {
+  'GC=F': 'COMEX gold futures, used for XAUUSD: tracks spot gold closely, usually a few dollars higher.',
+  'SI=F': 'COMEX silver futures, used for XAGUSD: tracks spot silver closely, usually slightly higher.',
+};
+
 export function cleanSymbol(s) {
-  const sym = String(s || '').trim().toUpperCase();
+  const raw = String(s || '').trim().toUpperCase().replace(/^([A-Z]{3})\/([A-Z]{3})$/, '$1$2');
+  const sym = ALIASES[raw] || raw;
   return SYMBOL_RE.test(sym) ? sym : null;
 }
 
