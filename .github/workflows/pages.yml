@@ -1,7 +1,11 @@
 # Deploys ONLY the public ngewqr.com site to GitHub Pages.
-# portal/ and worker/ are excluded: the Chartroom portal is served from Cloudflare
-# Pages behind Cloudflare Access, never from GitHub Pages.
+# portal/ and worker/ are excluded: the Chartroom portal is served by a
+# Cloudflare Worker behind Cloudflare Access, never from GitHub Pages.
 # Requires: repo Settings → Pages → Source = "GitHub Actions".
+#
+# Build and deploy are separate jobs (GitHub's recommended layout): the deploy
+# job starts only after the build job has finished, so the uploaded artifact
+# is always listed by the time deploy-pages looks for it.
 name: Deploy site to GitHub Pages
 
 on:
@@ -16,14 +20,11 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - name: Assemble public site
@@ -36,5 +37,13 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - id: deployment
         uses: actions/deploy-pages@v4
