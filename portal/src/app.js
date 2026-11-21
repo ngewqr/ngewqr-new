@@ -8,6 +8,7 @@ import { atrValues } from './indicators/atr.js';
 import { rebase, stats } from './compare.js';
 import { renderChart, formatTime } from './chart.js';
 import { initOptions, optionsSymbolChanged } from './options.js';
+import { initMarket, drawChart as drawMarket } from './market.js';
 import { stanceSeries, currentStance } from './analysis/stance.js';
 import { scorecard, baseline, conditionalStats, HORIZONS } from './analysis/scorecard.js';
 
@@ -113,11 +114,13 @@ function buildControls() {
     store.set('ta-theme', currentTheme() === 'dark' ? 'light' : 'dark');
     applyPrefs();
     draw();
+    drawMarket();
   });
   $('#palette-btn').addEventListener('click', () => {
     store.set('ta-palette', document.documentElement.dataset.palette === 'cb' ? 'std' : 'cb');
     applyPrefs();
     draw();
+    drawMarket();
   });
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (!store.get('ta-theme')) draw(); });
   window.addEventListener('popstate', () => { readUrl(); load(); });
@@ -352,5 +355,6 @@ function drawCompareTable(mode) {
 applyPrefs();
 buildControls();
 initOptions(() => state.t);
+initMarket();
 readUrl();
 load();

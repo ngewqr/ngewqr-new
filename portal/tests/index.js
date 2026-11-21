@@ -3,3 +3,5 @@
 import './indicators.test.js';
 import './batch2.test.js';
 import './options.test.js';
+import './vix.test.js';
+import './scan.test.js';

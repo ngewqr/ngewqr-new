@@ -1,0 +1,61 @@
+# Deploys Chartroom (portal files + /api Worker) to Cloudflare on every merge
+# to main that touches portal/ or worker/. Tests must pass first.
+
+# Optional repository secrets (without them the job runs tests and skips deploy):
+#   CLOUDFLARE_API_TOKEN   token scoped to the Qirui account (Workers + D1) and the ngewqr.com zone
+#   CLOUDFLARE_ACCOUNT_ID  the Qirui account ID
+# The Worker's Access secrets (ACCESS_TEAM_DOMAIN, ACCESS_AUD) are already
+# stored on Cloudflare; `wrangler deploy` keeps them.
+name: Deploy Chartroom
+
+on:
+  push:
+    branches: [main]
+    paths: ['portal/**', 'worker/**', '.github/workflows/deploy-chartroom.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-chartroom
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Tests
+        run: node --test portal/tests/
+      - name: Check secrets are set
+        id: secrets
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -n "$CLOUDFLARE_API_TOKEN" ] && [ -n "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Cloudflare secrets not set; tests passed, deploy skipped (deploys are done manually)."
+          fi
+      - name: Deploy Worker and portal files
+        if: steps.secrets.outputs.ready == 'true'
+        working-directory: worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx --yes wrangler@4.158.0 deploy
+      - name: Login gate still holds
+        if: steps.secrets.outputs.ready == 'true'
+        run: |
+          for p in / /api/chart?symbol=AAPL\&range=1y\&interval=1d; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "https://ta.ngewqr.com$p")
+            loc=$(curl -s -o /dev/null -w '%{redirect_url}' "https://ta.ngewqr.com$p")
+            echo "$p -> $code $loc"
+            [ "$code" = "302" ] && echo "$loc" | grep -q 'cloudflareaccess.com' || { echo "::error::$p is not behind Cloudflare Access"; exit 1; }
+          done

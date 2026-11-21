@@ -14,6 +14,7 @@
 <body>
 <header class="top">
   <a class="brand" href="./" aria-label="Chartroom home">Chartroom</a>
+  <nav class="views" aria-label="Views"><a href="./" aria-current="page">Chart</a><a href="scan.html">Scanner</a></nav>
   <form id="ticker-form" class="ticker" autocomplete="off">
     <label for="ticker" class="vh">Ticker</label>
     <input id="ticker" name="ticker" spellcheck="false" maxlength="15" placeholder="Ticker">
@@ -25,6 +26,8 @@
     <button type="button" id="theme-btn" title="Toggle dark/light">Theme</button>
   </div>
 </header>
+
+<section id="market" class="market" aria-label="VIX"></section>
 
 <section class="bar">
   <form id="cmp-form" class="cmp" autocomplete="off">
